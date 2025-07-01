@@ -1,0 +1,15 @@
+import streamlit as st
+import requests
+
+HF_API_KEY = st.secrets["HF_API_KEY"]  # Safe: key is not hardcoded
+
+headers = {
+    "Authorization": f"Bearer {HF_API_KEY}"
+}
+
+API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
+
+def summarize_text(text):
+    payload = {"inputs": text}
+    response = requests.post(API_URL, headers=headers, json=payload)
+    return response.json()
